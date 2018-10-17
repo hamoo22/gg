@@ -5,12 +5,12 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
-if(!prefix) var prefix = "-" ; // البرفكس 
-
+if(!prefix) var prefix = "-" ; // البرفكس
+ 
 var stopReacord = true;
 var reactionRoles = [];
 var definedReactionRole = null;
-
+ 
 client.on("message", async message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -26,7 +26,7 @@ client.on("message", async message => {
       message.channel.send(`now go and add reaction in the message you want for role ${role.name}`);
       definedReactionRole = role;
       stopReacord = false;
-    }     
+    }    
 })
 client.on('raw', raw => {
   if (!['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(raw.t)) return;
@@ -47,14 +47,14 @@ client.on('messageReactionAdd', (reaction, user) => {
       definedReactionRole = null;
       reaction.message.react(reaction.emoji.name)
       .catch(err => {done = true; reaction.message.channel.send(`sorry i can't use this emoji but the reaction role done! anyone react will get the role!`)})
-      if(done) reaction.remove(user); 
+      if(done) reaction.remove(user);
     } else {
       var request = reactionRoles[reaction.message.id];
       if(!request) return;
       if(request.emoji.name != reaction.emoji.name) return reaction.remove(user);
       reaction.message.guild.members.get(user.id).addRole(request.role);
     }
-}) 
+})
 client.on('messageReactionRemove', (reaction, user) => {
   if(user.id == client.user.id) return;
   if(!stopReacord) return;
@@ -62,7 +62,6 @@ client.on('messageReactionRemove', (reaction, user) => {
   if(!request) return;
   reaction.message.guild.members.get(user.id).removeRole(request.role);
 });
-
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);
