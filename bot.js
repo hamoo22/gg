@@ -34,7 +34,7 @@ const w = ['./w1.png'];
                         ctx.fillText(`welcome to Brix`, 300, 130);
                        
                         ctx.font = "bold 12px Arial";
-                        ctx.fontSize = '20px';
+                        ctx.fontSize = '30px';
                         ctx.fillStyle = "#ff0000";
                         ctx.textAlign = "center";
                         ctx.fillText(member.user.username, 200, 150);
