@@ -1,112 +1,135 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const fs = require('fs');
-const moment = require('moment');
-const jimp = require('jimp');
-const Canvas = require('canvas');
+const fs = require("fs"); //npm i fs
+const Canvas = require("canvas");//for linux = npm i canvas | for windows = npm i canvas-prebuilt
+const jimp = require("jimp");// npm i jimp
+const prefix = "="; // prefix
+const Discord = require('discord.js');// npm i discord.js
+const client = new Discord.Client();
+const id = JSON.parse(fs.readFileSync("./id/mozo.json", "utf8"));
+client.on("message", message => {
+  if (message.author.bot) return;
+fs.writeFile('./id/mozo.json', JSON.stringify(id), (err) => {
+if (err) console.error(err);
+});
+});
+      client.on('message', message => {
+          if(!id[message.author.id]) id[message.author.id] ={
+              textrank: 1,
+              points: 1
+          };
+          if(message.author.bot) return;
+          id[message.author.id].points = Math.floor(id[message.author.id].points+4);
+          if(id[message.author.id].points > 10) {
+              id[message.author.id].points = 10;
+              id[message.author.id].level = Math.floor(id[message.author.id].level+4);
+          }
+          fs.writeFile('./id/mozo.json', JSON.stringify(id), (err) => {
+if (err) console.error(err);
+});
+   
+    client.on("message", message => {
+  if (message.author.bot) return;
+    if(!message.channel.guild) return;
+if (message.content.startsWith(prefix + "id")) {
+                               let user = message.mentions.users.first();
+         var human = message.mentions.users.first();
+            var author;
+            if(human) {
+                author = human;
+            } else {
+                author = message.author;
+            }
+          var mentionned = message.mentions.members.first();
+             var ah;
+            if(mentionned) {
+                ah = mentionned;
+            } else {
+                ah = message.member;
+            }
+            var ment = message.mentions.users.first();
+            var getvalueof;
+            if(ment) {
+              getvalueof = ment;
+            } else {
+              getvalueof = message.author;
+            }
+   var mentionned = message.mentions.users.first();
  
-client.on('guildMemberAdd', member => {
-     const welcomer =  member.guild.channels.find('name', 'chat');
-const w = ['./w1.png'];
+    var client;
+      if(mentionned){
+          var client = mentionned;
+      } else {
+          var client = message.author;
  
-         let Image = Canvas.Image,
+      }
+if (!id[getvalueof.id]) id[getvalueof.id] = {textrank: 0,points: 1};
+            let Image = Canvas.Image,
             canvas = new Canvas(400, 200),
             ctx = canvas.getContext('2d');
-        fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+            fs.readFile("./id/rank.png", function (err, Background) {
             if (err) return console.log(err);
-            let BG = Canvas.Image;
+            let id = Canvas.Image;
             let ground = new Image;
             ground.src = Background;
             ctx.drawImage(ground, 0, 0, 400, 200);
-             
-         
  
-                let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(100) + ".png" : member.user.displayAvatarURL;
+});
+ 
+ 
+ 
+                let url = getvalueof.displayAvatarURL.endsWith(".webp") ? getvalueof.displayAvatarURL.slice(5, -20) + ".png" : getvalueof.displayAvatarURL;
                 jimp.read(url, (err, ava) => {
                     if (err) return console.log(err);
                     ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
                         if (err) return console.log(err);
-                       
-                        ctx.font = "bold 12px Arial";
-                        ctx.fontSize = '20px';
-                        ctx.fillStyle = "#ff0000";
+ 
+                        // N A M E  |  S H A D O W
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fontSize = '18px';
+                        ctx.fillStyle = "#000000";
                         ctx.textAlign = "center";
-                        ctx.fillText(`welcome to Brix`, 300, 130);
-                       
-                        ctx.font = "bold 12px Arial";
-                        ctx.fontSize = '30px';
-                        ctx.fillStyle = "#ff0000";
+                        ctx.fillText(`${getvalueof.username}`, 253, 79);
+ 
+                        // N A M E
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fontSize = '18px';
+                        ctx.fillStyle = "#f1f1f1";
                         ctx.textAlign = "center";
-                        ctx.fillText(member.user.username, 200, 150);
- 
-                let Avatar = Canvas.Image;
-                              let ava = new Avatar;
-                              ava.src = buf;
-                              ctx.beginPath();
-                              ctx.arc(77, 101, 62, 0, Math.PI*2);
-                              ctx.stroke();
-                                 ctx.clip();
-                                 ctx.drawImage(ava, 13, 38, 128, 126);  
-                         
-               
-                             
-welcomer.sendFile(canvas.toBuffer())
+                        ctx.fillText(`${getvalueof.username}`, 253, 77);
  
  
+                        // T E X T  R A N K
+                        ctx.font = "bold 12px Arial";
+                        ctx.fontSize = '12px';
+                        ctx.fillStyle = "#f1f1f1";
+                        ctx.textAlign = "center";
+                        ctx.fillText(`${id[getvalueof.id].textrank}`, 252, 124);
  
-     
-     
-                    }  )  
-     
-                   
+                        // P O I N T S
+                        ctx.font = "bold 12px Arial";
+                        ctx.fontSize = '12px';
+                        ctx.fillStyle = "#f1f1f1";
+                        ctx.textAlign = "center";
+                        ctx.fillText(`${id[getvalueof.id].points}`, 253, 171);
  
-})
-      });                    
+ 
+                        let Avatar = Canvas.Image;
+                        let ava = new Avatar;
+ 
+ava.src = buf;
+                        ctx.beginPath();
+                        ctx.arc(75, 100, 780, 0, Math.PI*2, true);
+                        ctx.closePath();
+                        ctx.clip();
+                        ctx.drawImage(ava, 26, 69, 93, 93);
+                       
+message.channel.sendFile(canvas.toBuffer());
+ 
 });
-var dat = JSON.parse("{}");
-function forEachObject(obj, func) {
-    Object.keys(obj).forEach(function (key) { func(key, obj[key]) });
+});
 }
-client.on("ready", () => {
-    var guild;
-    while (!guild)
-        guild = client.guilds.get("495406119255015454");
-    guild.fetchInvites().then((data) => {
-        data.forEach((Invite, key, map) => {
-            var Inv = Invite.code;
-            dat[Inv] = Invite.uses;
-        });
-    });
 });
- 
- 
- 
-client.on("guildMemberAdd", (member) => {
-    let channel = member.guild.channels.get("495406119255015454");
-    if (!channel) {
-        console.log("!the channel id it's not correct");
-        return;
-    }
-    if (member.id == client.user.id) {
-        return;
-    }
-    console.log('-');
-    var guild;
-    while (!guild)
-        guild = client.guilds.get("495406119255015454");
-    guild.fetchInvites().then((data) => {
-        data.forEach((Invite, key, map) => {
-            var Inv = Invite.code;
-            if (dat[Inv])
-                if (dat[Inv] < Invite.uses) {
-                    setTimeout(function() {
- channel.send(`**invited by** ${Invite.inviter} `) ;
-                    },1500);
- }
-            dat[Inv] = Invite.uses;
-       
-       });
-    });
 });
 
 // THIS  MUST  BE  THIS  WAY
