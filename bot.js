@@ -29,13 +29,13 @@ const w = ['./w1.png'];
                        
                         ctx.font = "bold 12px Arial";
                         ctx.fontSize = '20px';
-                        ctx.fillStyle = "#f1f1f1";
+                        ctx.fillStyle = "#ff0000";
                         ctx.textAlign = "center";
                         ctx.fillText(`welcome to Brix`, 300, 130);
                        
                         ctx.font = "bold 12px Arial";
                         ctx.fontSize = '20px';
-                        ctx.fillStyle = "#f1f1f1";
+                        ctx.fillStyle = "#ff0000";
                         ctx.textAlign = "center";
                         ctx.fillText(member.user.username, 200, 150);
  
